@@ -11,9 +11,7 @@ const Clicks = ({text, count}) => (
   <li>{text} : <b>{count}</b></li> 
 )
 
-const Statistics = (props) => {
-
-  let {good, neutral, bad} = props.args
+const Statistics = ({good, neutral, bad}) => {
 
   let total = good + neutral + bad
   let positive = good ? (good / total) * 100 : 0
@@ -27,6 +25,26 @@ const Statistics = (props) => {
     </>
   )
 
+}
+
+const StatisticsComponent = (props) => {
+
+  let {good, neutral, bad} = props.args
+
+  if(good || neutral || bad) {
+    return(  
+    <ul>
+      <Clicks text={"good"} count={good} />
+      <Clicks text={"neutral"} count={neutral} />
+      <Clicks text={"bad"} count={bad} />
+      <Statistics good={good} neutral={neutral} bad={bad} />
+    </ul>
+    )
+  
+  }
+  
+  return <p> No feedback given </p>
+  
 }
 
 
@@ -59,14 +77,10 @@ const App = () => {
       </div>
 
       <Header text={"statistics"} />
-      
-     <ul>
-       <Clicks text={"good"} count={good} />
-       <Clicks text={"neutral"} count={neutral} />
-       <Clicks text={"bad"} count={bad} />
-       <br></br>
-       <Statistics args={{good, neutral, bad}} />
-     </ul>
+
+      <div>
+        <StatisticsComponent args={{good, neutral, bad}} />
+      </div>
 
     </div>
   )
