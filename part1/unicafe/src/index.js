@@ -7,44 +7,33 @@ const Header = ({text}) => (
   <h2> {text} </h2> 
 )
 
-const Clicks = ({text, count}) => ( 
-  <li>{text} : <b>{count}</b></li> 
+const Statistic = ({text, count, symbol}) => ( 
+  <li>{text} <b>{count}</b> {symbol} </li> 
 )
 
-const Statistics = ({good, neutral, bad}) => {
-
-  let total = good + neutral + bad
-  let positive = good ? (good / total) * 100 : 0
-  let average = good ? (good - bad) / total : 0
-
-  return (
-    <>
-      <li>all: {total}</li>
-      <li>average: {average}</li>
-      <li>positive: {positive} %</li>
-    </>
-  )
-
-}
-
-const StatisticsComponent = (props) => {
+const Statistics = (props) => {
 
   let {good, neutral, bad} = props.args
 
+  let total = good + neutral + bad
+  let positive = good ? (good / total) * 100 : 0
+  let average = (good - bad) / total
+
   if(good || neutral || bad) {
-    return(  
+    return (  
     <ul>
-      <Clicks text={"good"} count={good} />
-      <Clicks text={"neutral"} count={neutral} />
-      <Clicks text={"bad"} count={bad} />
-      <Statistics good={good} neutral={neutral} bad={bad} />
+      <Statistic text={"good"} count={good} />
+      <Statistic text={"neutral"} count={neutral} />
+      <Statistic text={"bad"} count={bad} />
+      <Statistic text={"all: "} count={total} />
+      <Statistic text={"average: "} count={average} />
+      <Statistic text={"positive: "} count={positive} symbol={"%"} />
     </ul>
     )
   
   }
   
   return <p> No feedback given </p>
-  
 }
 
 
@@ -79,7 +68,7 @@ const App = () => {
       <Header text={"statistics"} />
 
       <div>
-        <StatisticsComponent args={{good, neutral, bad}} />
+        <Statistics args={{good, neutral, bad}} />
       </div>
 
     </div>
