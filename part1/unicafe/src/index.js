@@ -8,8 +8,26 @@ const Header = ({text}) => (
 )
 
 const Stats = ({text, count}) => ( 
-  <p> {text} : <b>{count}</b></p> 
+  <li>{text} : <b>{count}</b></li> 
 )
+
+const MiscStats = ({good, neutral, bad}) => {
+
+  
+  let total = good + neutral + bad
+  let positive = good ? (good / total) * 100 : 0
+  let average = good ? (good - bad) / total : 0
+
+  return (
+    <>
+      <li>all: {total}</li>
+      <li>average: {average}</li>
+      <li>positive: {positive} %</li>
+    </>
+  )
+
+}
+
 
 const Button = ({handleClick, text}) => ( 
   <button onClick={handleClick}> {text} </button> 
@@ -42,9 +60,11 @@ const App = () => {
       <Header text={"statistics"} />
       
      <ul>
-       <li><Stats text={"good"} count={good} /></li>
-       <li><Stats text={"neutral"} count={neutral} /></li>
-       <li><Stats text={"bad"} count={bad} /></li>
+       <Stats text={"good"} count={good} />
+       <Stats text={"neutral"} count={neutral} />
+       <Stats text={"bad"} count={bad} />
+       <br></br>
+       <MiscStats good={good} neutral={neutral} bad={bad} />
      </ul>
 
     </div>
