@@ -7,13 +7,14 @@ const Header = ({text}) => (
   <h2> {text} </h2> 
 )
 
-const Stats = ({text, count}) => ( 
+const Clicks = ({text, count}) => ( 
   <li>{text} : <b>{count}</b></li> 
 )
 
-const MiscStats = ({good, neutral, bad}) => {
+const Statistics = (props) => {
 
-  
+  let {good, neutral, bad} = props.args
+
   let total = good + neutral + bad
   let positive = good ? (good / total) * 100 : 0
   let average = good ? (good - bad) / total : 0
@@ -60,11 +61,11 @@ const App = () => {
       <Header text={"statistics"} />
       
      <ul>
-       <Stats text={"good"} count={good} />
-       <Stats text={"neutral"} count={neutral} />
-       <Stats text={"bad"} count={bad} />
+       <Clicks text={"good"} count={good} />
+       <Clicks text={"neutral"} count={neutral} />
+       <Clicks text={"bad"} count={bad} />
        <br></br>
-       <MiscStats good={good} neutral={neutral} bad={bad} />
+       <Statistics args={{good, neutral, bad}} />
      </ul>
 
     </div>
