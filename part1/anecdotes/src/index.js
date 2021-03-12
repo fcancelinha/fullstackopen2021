@@ -1,22 +1,19 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
-
-
+const Header = ({text}) => <h2> {text} </h2>
 
 const Button = ({handle, text}) => <button onClick={handle}> {text} </button>
-
-
-
-
 
 const App = () => {
 
   const [selected, setSelected] = useState(0)
+  const [topIndex, setTopIndex] = useState(0)
   const [votes, setVotes] = useState([])
 
   const randAnecdote = () => {
-    setSelected(Math.floor(Math.random() * ((anecdotes.length - 1) + 1)))
+    setSelected(Math.floor(Math.random() * (anecdotes.length)))
+    console.log(selected)
   } 
 
   const anecdotes = [
@@ -32,11 +29,14 @@ const App = () => {
 
     let copy = [...votes]
 
-    if(!copy.length){
+    if(!copy.length)
       copy = copy.concat(new Array(anecdotes.length).fill(0))
-    }
 
     copy[selected] += 1
+    
+    if(copy[selected] > copy[topIndex])
+      setTopIndex(selected)
+    
     setVotes(copy)
   }
    
@@ -44,6 +44,9 @@ const App = () => {
 
   return (
     <div>
+
+      <Header text={'Anecdote of the day'} />
+
       {anecdotes[selected]}
       <div>
         has {votes[selected] || 0} votes
@@ -52,6 +55,15 @@ const App = () => {
       <div>
         <Button handle={vote} text={'vote'} />
         <Button handle={randAnecdote} text={'next anecdote'} />
+      </div>
+
+      <Header text={'Anecdote with most votes'} />
+
+      <div>
+      {anecdotes[topIndex]}
+        <div>
+          has {votes[topIndex] || 0} votes 
+        </div>
       </div>
 
     </div>
