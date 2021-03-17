@@ -3,17 +3,25 @@ import Content from './Content'
 import Header from './Header'
 import Total from './Total'
 
-const Course = ({course}) => {
+const Course = ({ course }) => {
+    
     return (
         <div>
-            <Header text={course.name} />
-            
-            <ul>
-                <Content parts={course.parts} />
-            </ul>
 
-            <Total parts={course.parts} />
-           
+            <Header text={'Web development curriculum'} />
+
+            {course.map(c =>
+                <div>
+                    <Header text={c.name} />
+
+                    <ul>
+                        <Content parts={c.parts} />
+                    </ul>
+
+                    <Total parts={c.parts} />
+                </div>
+            )}
+
         </div>
     )
 }
