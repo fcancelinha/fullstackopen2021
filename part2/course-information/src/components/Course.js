@@ -4,14 +4,15 @@ import Header from './Header'
 import Total from './Total'
 
 const Course = ({ course }) => {
-    
+
     return (
         <div>
 
             <Header text={'Web development curriculum'} />
 
             {course.map(c =>
-                <div>
+            
+                <div key={c.id}>
                     <Header text={c.name} />
 
                     <ul>
