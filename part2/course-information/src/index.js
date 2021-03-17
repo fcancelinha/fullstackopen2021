@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Course from './components/Course'
 
+//exercise 2.5 uhm... I did it from the start hopefully it's okay... comment for the commit
 
 const App = () => {
   const course = [
