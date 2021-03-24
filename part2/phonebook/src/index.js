@@ -10,8 +10,8 @@ const PersonList = ({list}) => {
   return(
     <div>
       <ul>
-        {list.map(({ id, name }) => 
-          <li key={id}> {name} </li>
+        {list.map(({ id, name, number}) =>
+          <li key={id}> {name} | tel: {number}</li>
         )}
       </ul>
 
@@ -22,55 +22,61 @@ const PersonList = ({list}) => {
 
 
 const App = () => {
-  const [ persons, setPersons ] = useState([]) 
-  const [ newName, setNewName ] = useState('')
+  const [ persons, setPersons ] = useState([])
+  const [ newEntry, setNewEntry ] = useState({id: 0, name: '', number: 0})
 
 
-  const handleNameInput = (event) => {
-    console.log("name", event.target.value);
-    setNewName(event.target.value);
+  const handleInput = (key, e) => {
+
+    setNewEntry({
+      ...newEntry,
+      [key]: e.target.value
+    })
+
+    console.log(newEntry);
   }
 
-  const addName = (event) => {
+  const submitInput = (event) => {
+    
     event.preventDefault();
-    console.log("persons", persons);
 
-    if(!newName){
-      alert("you need to input a name")
-      return
+    if(!newEntry.name || !newEntry.number)
+      return alert("there are fields left blank")
+
+    for (const ele of persons) {
+      if(ele.name === newEntry.name)
+        return alert(`${ele.name} already exist in the phonebook`)
+
+      if(ele.number === newEntry.number)
+        return alert(`${ele.number} already exist in the phonebook`)
     }
 
-    if(persons.findIndex(({name}) => name === newName) !== -1) {
-      alert(`${newName} is already added to the phonebook`)
-      return
-    }
-
-    const newPerson = {
-      id: persons.length + 1,
-      name: newName
-    }
-
-    setPersons(persons.concat(newPerson))
-    setNewName('')
+    newEntry.id = persons.length + 1
+    setPersons(persons.concat(newEntry))
+    setNewEntry({id: 0, name: '', number: 0})
   }
 
 
 
   return (
     <div>
-      <h2>Phonebook</h2>
-      <form>
-        <div>
-          name: <input value={newName} onChange={handleNameInput}/>
-        </div>
-        <div>
-          <button type="submit" onClick={addName}>add</button>
-        </div>
-      </form>
-      <h2>Numbers</h2>
-      
-      <PersonList list={persons} />
 
+      <h2>Phonebook</h2>
+
+      <form>
+
+        <div> name: <input value={newEntry.name} onChange={(event) => handleInput('name', event)}/></div>
+        <div> number: <input value={newEntry.number || ''} onChange={(event) => handleInput('number', event)}/> </div>
+       
+        <div>
+          <button type="submit" onClick={submitInput}>add</button>
+        </div>
+
+      </form>
+
+      <h2>Numbers</h2>
+
+      <PersonList list={persons} />
 
     </div>
   )
