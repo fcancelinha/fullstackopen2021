@@ -36,8 +36,13 @@ const App = () => {
     console.log("persons", persons);
 
     if(!newName){
-      alert("you need to input a name");
-      return;
+      alert("you need to input a name")
+      return
+    }
+
+    if(persons.findIndex(({name}) => name === newName) !== -1) {
+      alert(`${newName} is already added to the phonebook`)
+      return
     }
 
     const newPerson = {
