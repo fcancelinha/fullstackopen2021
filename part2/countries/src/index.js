@@ -1,8 +1,34 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import Searchbar from './components/Searchbar'
+import CountryList from './components/CountryList'
+
+
+const App = () => {
+    const [search, setSearch] = useState('')
+
+  return(
+
+    <div>
+      <Searchbar filter={search} handler={(event) => setSearch(event.target.value)} />
+
+      <div>
+        <CountryList search={search} />
+      </div>
+
+
+
+    </div>
+
+  )
+
+
+
+}
+
+
+
 
 ReactDOM.render(
   <React.StrictMode>
@@ -11,7 +37,3 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
