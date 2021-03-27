@@ -1,34 +1,38 @@
-import React, {useState, useEffect} from 'react'
-import Country from './Country'
+import React, { useState } from 'react'
 import CountryInfo from './CountryInfo'
-import axios from 'axios'
+import Button from './Button'
 
-const CountryList = ({search}) => {
-    const [list, setList] = useState([])
+const CountryList = ({ filtered }) => {
+  const [country, setCountry] = useState({})
 
-  useEffect(() => {
-    axios
-    .get('https://restcountries.eu/rest/v2/all')
-    .then(response => {
-      console.log("data", response)
-      setList(response.data)
-    })
-  }, [])
+  if (!filtered.length)
+    return <li>No matching results!</li>
 
-  const filteredList = (search) => {
-    const filtered = list.filter(({name}) => name.toLowerCase().includes(search.toLowerCase()))
-    
-    if(!filtered.length)
-      return <li>No matching results!</li>
-    
-    const elements = filtered.length > 10 
-              ? <li>Too many specific matches, specify another filter </li> 
-              : filtered.map(({numericCode, name}) => <Country key={numericCode} content={name} />) 
-      
-    return filtered.length === 1 ?  <CountryInfo info={filtered} />  : elements 
+  if (filtered.length > 10)
+    return <li>Too many specific matches, specify another filter</li>
+
+  const handler = (ct) => {
+    console.log("ct", ct)
+    setCountry(ct)
   }
 
-    return filteredList(search)
+  return (
+    <div>
+
+      <ul hidden={filtered.length === 1}>
+        {filtered.map(x => (
+          <li key={x.name}> 
+            {x.name} <Button handler={() => handler(x)} text={"show"} />
+          </li>
+        ))}
+      </ul>
+
+      <div>
+        <CountryInfo info={filtered.length === 1 ? filtered[0] : country } />
+      </div>
+
+    </div>
+  )
 
 }
 

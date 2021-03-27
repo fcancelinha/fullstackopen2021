@@ -1,10 +1,13 @@
 import React from 'react'
 
-const infoInfo = ({info}) => {
+const CountryInfo = ({info}) => {
 
-    console.log("info", info[0])
-    const {name, capital, population, languages, flag} = info[0]
+    console.log("info", info.name)
+    if(info.name === undefined) 
+        return "";
 
+    const {name, capital, population, languages, flag} = info
+   
     return (
         <div>
             <h3> {name} </h3>
@@ -24,4 +27,4 @@ const infoInfo = ({info}) => {
     )
 }
 
-export default infoInfo
+export default CountryInfo
