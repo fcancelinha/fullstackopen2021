@@ -1,8 +1,8 @@
 import React from 'react'
+import Weather from './Weather'
 
 const CountryInfo = ({info}) => {
 
-    console.log("info", info.name)
     if(info.name === undefined) 
         return "";
 
@@ -22,6 +22,11 @@ const CountryInfo = ({info}) => {
             </ul>
            
             <img src={flag} width="100px" alt="info flag"></img>
+
+
+            <div>
+                <Weather countryName={name} />
+            </div>
 
         </div>
     )

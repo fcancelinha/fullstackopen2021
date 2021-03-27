@@ -19,16 +19,16 @@ const CountryList = ({ filtered }) => {
   return (
     <div>
 
-      <ul hidden={filtered.length === 1}>
-        {filtered.map(x => (
-          <li key={x.name}> 
+      <ul>
+        {filtered.length !== 1 && filtered.map(x => (
+          <li key={x.name}>
             {x.name} <Button handler={() => handler(x)} text={"show"} />
           </li>
         ))}
       </ul>
 
       <div>
-        <CountryInfo info={filtered.length === 1 ? filtered[0] : country } />
+        <CountryInfo info={filtered.length === 1 ? filtered[0] : country} />
       </div>
 
     </div>
