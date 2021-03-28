@@ -6,8 +6,7 @@ const CountryViewer = ({search, list}) => {
 
     let filteredList = list.filter(({name}) => name.toLowerCase().includes(search.toLowerCase()))
 
-    return <CountryList filtered={filteredList} />
-        
+    return <CountryList filtered={filteredList} />        
 }
 
 export default CountryViewer

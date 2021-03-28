@@ -5,9 +5,6 @@ import Contacts from './components/Contacts'
 import ContactForm from './components/ContactForm'
 import axios from 'axios'
 
-
-
-
 const App = () => {
   const [persons, setPersons] = useState([])
   const [filter, setFilter] = useState("")

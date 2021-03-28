@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
+import axios from 'axios'
 
 const ContactForm = ({persons, personHandler}) => {
-    const [newEntry, setNewEntry] = useState({ id: 0, name: '', number: 0 })
+    const [newEntry, setNewEntry] = useState({name: '', number: 0 })
 
     const submitInput = (event) => {
 
@@ -18,9 +19,17 @@ const ContactForm = ({persons, personHandler}) => {
                 return alert(`${ele.number} already exist in the phonebook`)
         }
 
-        newEntry.id = persons.length + 1
-        personHandler(newEntry)
-        setNewEntry({ id: 0, name: '', number: 0 })
+        axios
+            .post(`http://localhost:3001/persons`, newEntry)
+            .then(response => {
+                console.log(response)
+                personHandler(response.data)
+                setNewEntry({name: '', number: 0})
+            }).catch(error => {
+                console.log(error)
+            })
+
+       
     }
 
     const handleInput = (key, e) => {
