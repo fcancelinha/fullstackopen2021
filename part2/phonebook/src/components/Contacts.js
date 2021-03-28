@@ -11,9 +11,8 @@ const Contacts = ({ persons, filter, handler }) => {
             PhoneService
                 .erase(contactID)
                 .then(response => {
-
-                    if (response.status === 200)
-                        handler(contactID)
+                
+                    handler(contactID)
 
                 }).catch(error => {
                     console.log("deletion error", error)

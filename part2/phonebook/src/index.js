@@ -9,7 +9,7 @@ const App = () => {
   const [persons, setPersons] = useState([])
   const [filter, setFilter] = useState("")
   
-  const handlePerson = (entry) => setPersons(persons.concat(entry))
+  const handlePerson = (entry) => setPersons(entry)
   const handlePersonDeletion = (contactID) => setPersons(persons.filter(({id}) => id !== contactID))
 
 

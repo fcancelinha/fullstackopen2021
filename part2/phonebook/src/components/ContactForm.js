@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import PhoneService from '../services/PhoneService'
 
-const ContactForm = ({persons, personHandler}) => {
-    const [newEntry, setNewEntry] = useState({name: '', number: 0 })
+const ContactForm = ({ persons, personHandler }) => {
+    const [newEntry, setNewEntry] = useState({ name: '', number: 0 })
 
-    const submitInput = (event) => {
+    const submitInput = (event, contact) => {
 
         event.preventDefault();
 
@@ -12,24 +12,36 @@ const ContactForm = ({persons, personHandler}) => {
             return alert("there are fields left blank")
 
         for (const ele of persons) {
-            if (ele.name === newEntry.name)
-                return alert(`${ele.name} already exist in the phonebook`)
 
-            if (ele.number === newEntry.number)
-                return alert(`${ele.number} already exist in the phonebook`)
+            if ((ele.name === newEntry.name || ele.number === newEntry.number)
+                && window.confirm(`${ele.name} already contains the info you are trying to add, update contact?`)) {
+
+                PhoneService
+                    .update(ele.id, contact)
+                    .then(data => {
+                        console.log("data", data)
+                        personHandler(persons.map((contact => contact.id === ele.id ? data : contact )))
+                        setNewEntry({ name: '', number: 0 })
+                    }).catch(error => {
+                        console.log(error)
+                    })
+
+                return alert("Contact updated");
+
+            }
         }
 
         PhoneService
-        .create(newEntry)
-        .then(data => {
-            console.log("data", data)
-            personHandler(data)
-            setNewEntry({name: '', number: 0})
-        }).catch(error => {
-            console.log(error);
-        })
+            .create(newEntry)
+            .then(data => {
+                console.log("data", data)
+                personHandler(persons.concat(data))
+                setNewEntry({ name: '', number: 0 })
+            }).catch(error => {
+                console.log(error);
+            })
 
-       
+
     }
 
     const handleInput = (key, e) => {
@@ -53,7 +65,7 @@ const ContactForm = ({persons, personHandler}) => {
             </div>
 
             <div>
-                <button type="submit" onClick={submitInput}>
+                <button type="submit" onClick={(event) => submitInput(event, newEntry)}>
                     add
                 </button>
             </div>
