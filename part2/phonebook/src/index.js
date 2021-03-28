@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import Filter from './components/Filter'
 import Contacts from './components/Contacts'
 import ContactForm from './components/ContactForm'
-import axios from 'axios'
+import PhoneService from './services/PhoneService'
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -13,11 +13,9 @@ const App = () => {
 
 
   useEffect(() => {
-    axios
-    .get('http://localhost:3001/persons')
-    .then(response => {
-      console.log("data", response)
-      setPersons(response.data)
+    PhoneService.getAll().then(data => {
+      console.log("getAll", data);
+      setPersons(data)
     })
   }, [])
   

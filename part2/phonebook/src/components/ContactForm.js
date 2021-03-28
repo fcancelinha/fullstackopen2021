@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import axios from 'axios'
+import PhoneService from '../services/PhoneService'
 
 const ContactForm = ({persons, personHandler}) => {
     const [newEntry, setNewEntry] = useState({name: '', number: 0 })
@@ -19,15 +19,15 @@ const ContactForm = ({persons, personHandler}) => {
                 return alert(`${ele.number} already exist in the phonebook`)
         }
 
-        axios
-            .post(`http://localhost:3001/persons`, newEntry)
-            .then(response => {
-                console.log(response)
-                personHandler(response.data)
-                setNewEntry({name: '', number: 0})
-            }).catch(error => {
-                console.log(error)
-            })
+        PhoneService
+        .create(newEntry)
+        .then(data => {
+            console.log("data", data)
+            personHandler(data)
+            setNewEntry({name: '', number: 0})
+        }).catch(error => {
+            console.log(error);
+        })
 
        
     }
