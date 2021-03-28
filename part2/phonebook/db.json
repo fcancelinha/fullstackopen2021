@@ -1,11 +1,6 @@
 {
   "persons": [
     {
-      "name": "Arto Hellas",
-      "number": "040-123456",
-      "id": 1
-    },
-    {
       "name": "Ada Lovelace",
       "number": "39-44-5323523",
       "id": 2
@@ -21,34 +16,9 @@
       "id": 4
     },
     {
-      "id": 5,
       "name": "Filipe Rosario",
-      "number": "44-4521-4551"
-    },
-    {
-      "id": 6,
-      "name": "Hyunjin Lee",
-      "number": "99-565-6684"
-    },
-    {
-      "id": 7,
-      "name": "Mininut",
-      "number": "995-454-4478"
-    },
-    {
-      "id": 8,
-      "name": "Mluukai",
-      "number": "88-9989-4544"
-    },
-    {
-      "name": "Ana Paula",
-      "number": "99-565-451",
-      "id": 9
-    },
-    {
-      "name": "Never Lucky",
-      "number": "787-4584",
-      "id": 10
+      "number": "89-454-78",
+      "id": 5
     }
   ]
 }

@@ -3,7 +3,7 @@ import React from 'react'
 
 const Contact = ({ info }) => {
 
-    return <li> {info.name} | tel: {info.number}</li>
+    return <>{info.name} | tel: {info.number}</>
 }
 
 

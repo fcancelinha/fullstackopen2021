@@ -10,6 +10,7 @@ const App = () => {
   const [filter, setFilter] = useState("")
   
   const handlePerson = (entry) => setPersons(persons.concat(entry))
+  const handlePersonDeletion = (contactID) => setPersons(persons.filter(({id}) => id !== contactID))
 
 
   useEffect(() => {
@@ -33,7 +34,7 @@ const App = () => {
 
       <h2>Numbers</h2>
 
-      <Contacts persons={persons} filter={filter} />
+      <Contacts persons={persons} filter={filter} handler={handlePersonDeletion} />
 
     </div>
   )
