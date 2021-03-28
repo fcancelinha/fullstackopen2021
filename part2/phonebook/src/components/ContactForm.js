@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import PhoneService from '../services/PhoneService'
 
-const ContactForm = ({ persons, personHandler }) => {
+const ContactForm = ({ persons, personHandler, notificationHandler}) => {
     const [newEntry, setNewEntry] = useState({ name: '', number: 0 })
 
     const submitInput = (event, contact) => {
@@ -22,11 +22,19 @@ const ContactForm = ({ persons, personHandler }) => {
                         console.log("data", data)
                         personHandler(persons.map((contact => contact.id === ele.id ? data : contact )))
                         setNewEntry({ name: '', number: 0 })
+                        notificationHandler({
+                            content:`${ele.name} updated`,
+                            color: "green"
+                        })
                     }).catch(error => {
                         console.log(error)
+                        notificationHandler({
+                            content:`There was a problem updating ${ele.name}`,
+                            color: "red"
+                        })
                     })
 
-                return alert("Contact updated");
+                return null;
 
             }
         }
@@ -37,8 +45,16 @@ const ContactForm = ({ persons, personHandler }) => {
                 console.log("data", data)
                 personHandler(persons.concat(data))
                 setNewEntry({ name: '', number: 0 })
+                notificationHandler({
+                    content:`${newEntry.name} created successfully`,
+                    color: "green"
+                })
             }).catch(error => {
-                console.log(error);
+                console.log("create error", error)
+                notificationHandler({
+                    content:`There was a problem creating ${newEntry.name} contact`,
+                    color: "red"
+                })
             })
 
 

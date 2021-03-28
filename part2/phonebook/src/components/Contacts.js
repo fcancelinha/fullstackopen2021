@@ -2,7 +2,7 @@ import React from 'react'
 import Contact from './Contact'
 import PhoneService from '../services/PhoneService'
 
-const Contacts = ({ persons, filter, handler }) => {
+const Contacts = ({ persons, filter, handler, notificationHandler }) => {
 
     const deleteContact = (contactID, name) => {
 
@@ -11,12 +11,14 @@ const Contacts = ({ persons, filter, handler }) => {
             PhoneService
                 .erase(contactID)
                 .then(response => {
-                
+                    console.log(response)
                     handler(contactID)
-
+                    notificationHandler({
+                        content:`${name} deleted`,
+                        color: "green"
+                    })
                 }).catch(error => {
                     console.log("deletion error", error)
-                    return alert("There was a problem deleting this contact, possibly deleted already")
                 })
         }
     }
