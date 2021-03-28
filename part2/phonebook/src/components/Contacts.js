@@ -19,6 +19,11 @@ const Contacts = ({ persons, filter, handler, notificationHandler }) => {
                     })
                 }).catch(error => {
                     console.log("deletion error", error)
+                    handler(persons.filter(({id}) => contactID !== id))
+                    notificationHandler({
+                        content:`Couldn't delete ${name}, resource already deleted`,
+                        color: "red"
+                    })
                 })
         }
     }
