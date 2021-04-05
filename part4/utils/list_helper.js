@@ -27,11 +27,20 @@ const mostBlogs = (blogs) => {
 
 }
 
+const mostLikes = (blogs) => {
+
+    if (blogs && blogs.length) {
+        const { _id, __v, url, ...obj } = blogs.sort((a, b) => b.likes - a.likes)[0]
+        return obj
+    }
+}
+
 
 
 module.exports = {
     dummy,
     totalLikes,
     favouriteBlog,
-    mostBlogs
+    mostBlogs,
+    mostLikes
 }

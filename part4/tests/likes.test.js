@@ -100,5 +100,15 @@ describe('the author with', () => {
         })
     })
 
+    test('with the most likes', () => {
+        const result = listHelper.mostLikes(blogs)
+
+        expect(result).toEqual({
+            title: "Canonical string reduction",
+            author: "Edsger W. Dijkstra",
+            likes: 12
+        })
+    })
+
 
 })
