@@ -29,10 +29,12 @@ const mostBlogs = (blogs) => {
 
 const mostLikes = (blogs) => {
 
-    if (blogs && blogs.length) {
-        const { _id, __v, url, ...obj } = blogs.sort((a, b) => b.likes - a.likes)[0]
-        return obj
-    }
+    const result = blogs.reduce((acc, curr) => {
+        acc[curr.author] = (acc[curr.author] || 0) + curr.likes
+        return acc
+      }, {})
+
+    return Object.entries(result).map(([author, likes]) => ({ author, likes })).sort((a, b) => b.likes - a.likes)[0]
 }
 
 
