@@ -5,6 +5,7 @@ require('express-async-errors')
 const app = express()
 const cors = require('cors')
 const notesRouter = require('./controllers/blog')
+const usersRouter = require('./controllers/user')
 const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
 const mongoose = require('mongoose')
@@ -32,6 +33,7 @@ app.use(
 )
 
 app.use('/api/blogs', notesRouter)
+app.use('/api/users', usersRouter)
 
 app.use(
     middleware.requestLogger,
