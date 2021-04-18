@@ -89,11 +89,25 @@ test('if the title and url properties are missing from the request data, receive
 
 test('deletion of a single blog', async () => {
     
-    const blog = await Blog.findOne({})
+    const blog = await api.get('/api/blogs')
+                    
+    await api
+            .delete(`/api/blogs/${blog.body[0].id}`)
+            .expect(204)
+})
+
+test('update the property likes of a single blog', async () => {
+    
+    const blog = (await api.get('/api/blogs')).body[0]
+
+    blog.likes = 20
 
     await api
-            .delete(`/api/blogs/${blog.id}`)
+            .put(`/api/blogs/${blog.id}`)
+            .send(blog)
             .expect(204)
+
+
 })
 
 
