@@ -79,6 +79,19 @@ test('if the likes prop is missing from the request, it will default 0', async (
     
 })
 
+test('if the title and url properties are missing from the request data, receive 400', async () => {
+    const newBlog = {
+        author: 'Edsger W. Dijkstra'
+    }
+
+    await api
+            .post('/api/blogs')
+            .send(newBlog)
+            .expect(400)
+
+
+})
+
 
 afterAll(() => {
     logger.info('Closing connection to database...')

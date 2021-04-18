@@ -15,13 +15,13 @@ const blogSchema = new mongoose.Schema({
     },
     likes: {
         type: Number,
+        default: 0
     },
 })
 
 blogSchema.set('toJSON', {
     transform: (document, returnObject) => {
         returnObject.id = returnObject._id
-        returnObject.likes ?  "" : returnObject.likes = 0
         delete returnObject._id
         delete returnObject.__v
     },

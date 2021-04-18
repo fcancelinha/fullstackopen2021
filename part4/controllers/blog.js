@@ -11,6 +11,9 @@ blogRouter.get('/', async (request, response, ) => {
 blogRouter.post('/', async (request, response) => {
     const blog = new Blog(request.body)
 
+    // if(!blog['title'] || !blog['url'])
+    //     response.status(400).send('Request body missing property')
+
     const savedBlog = await blog.save()
     response.status(201).json(savedBlog)
 
