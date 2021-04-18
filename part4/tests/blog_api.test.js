@@ -3,19 +3,14 @@ const supertest = require('supertest')
 const app = require('../app')
 const Blog = require('../models/blog')
 const helper = require('../utils/blog_helper')
-const logger = require('../utils/logger')
 
 // supertest serves as an HTTP tester
-
 const api = supertest(app)
 
 
 beforeEach(async () => {
     await Blog.deleteMany({})
-    let blogObject = new Blog(helper.initialBlogs[0])
-    await blogObject.save()
-    blogObject = new Blog(helper.initialBlogs[1])
-    await blogObject.save()
+    await Blog.insertMany(helper.initialBlogs)
 })
 
 test('blogs are returned as JSON', async () => {
@@ -92,8 +87,16 @@ test('if the title and url properties are missing from the request data, receive
 
 })
 
+test('deletion of a single blog', async () => {
+    
+    const blog = await Blog.findOne({})
+
+    await api
+            .delete(`/api/blogs/${blog.id}`)
+            .expect(204)
+})
+
 
 afterAll(() => {
-    logger.info('Closing connection to database...')
     mongoose.connection.close()
 })
