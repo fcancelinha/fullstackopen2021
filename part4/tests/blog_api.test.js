@@ -58,6 +58,27 @@ test('POST request creates a new blog post', async () => {
 })
 
 
+test('if the likes prop is missing from the request, it will default 0', async () => {
+    
+    const newBlog = {
+        title: 'Canonical string reduction',
+        author: 'Edsger W. Dijkstra',
+        url: 'http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html'
+    }
+
+    await api
+            .post('/api/blogs')
+            .send(newBlog)
+            .expect(201)
+            .expect('Content-Type', /application\/json/)
+
+    const blog = await api.get('/api/blogs')
+
+    expect(blog.body[2].likes).toBeDefined()
+    expect(blog.body[2].likes).toBe(0)
+    
+})
+
 
 afterAll(() => {
     logger.info('Closing connection to database...')
