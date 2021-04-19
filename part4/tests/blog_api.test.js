@@ -62,10 +62,10 @@ test('if the likes prop is missing from the request, it will default 0', async (
     }
 
     await api
-            .post('/api/blogs')
-            .send(newBlog)
-            .expect(201)
-            .expect('Content-Type', /application\/json/)
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(201)
+        .expect('Content-Type', /application\/json/)
 
     const blog = await api.get('/api/blogs')
 
@@ -80,9 +80,9 @@ test('if the title and url properties are missing from the request data, receive
     }
 
     await api
-            .post('/api/blogs')
-            .send(newBlog)
-            .expect(400)
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(400)
 
 
 })
@@ -92,8 +92,8 @@ test('deletion of a single blog', async () => {
     const blog = await api.get('/api/blogs')
                     
     await api
-            .delete(`/api/blogs/${blog.body[0].id}`)
-            .expect(204)
+        .delete(`/api/blogs/${blog.body[0].id}`)
+        .expect(204)
 })
 
 test('update the property likes of a single blog', async () => {
@@ -103,9 +103,9 @@ test('update the property likes of a single blog', async () => {
     blog.likes = 20
 
     await api
-            .put(`/api/blogs/${blog.id}`)
-            .send(blog)
-            .expect(204)
+        .put(`/api/blogs/${blog.id}`)
+        .send(blog)
+        .expect(204)
 
 
 })
