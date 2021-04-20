@@ -123,4 +123,15 @@ Authorization: bearer eyJhbGciOiCI6IkpXVCJ9
 ###
 DELETE http://localhost:3003/api/blogs/607ef5f9ad8bf81db9a1f2c3 HTTP/1.1
 Content-Type: application/json  
-Authorization: bearer eyJhbGciOiCI6IkpXVCJ9
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBpc3RhY2NpbyIsImlkIjoiNjA3ZWVkM2VjODkyOTUxMmY2N2YwM2E1IiwiaWF0IjoxNjE4OTQ5MDcxfQ.rqpmgtUc4ZNdNn1m9YafPq-Kd-5fQHXyss798sIOdTQ
+
+//DELETE without token
+###
+DELETE http://localhost:3003/api/blogs/607ef5f9ad8bf81db9a1f2c3 HTTP/1.1
+Content-Type: application/json  
+
+//DELETE with correct token and user
+###
+DELETE http://localhost:3003/api/blogs/607ef5f9ad8bf81db9a1f2c3 HTTP/1.1
+Content-Type: application/json  
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhY2FyZGkiLCJpZCI6IjYwN2VlZDNhYzg5Mjk1MTJmNjdmMDNhNCIsImlhdCI6MTYxODk1MTY0Nn0.qWhT9BvbtX06TgcDgUWiqOFmFElMAnRSbHCJ3XQdPUk

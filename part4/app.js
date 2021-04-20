@@ -4,10 +4,11 @@ const config = require('./utils/config')
 require('express-async-errors')
 const app = express()
 const cors = require('cors')
-const notesRouter = require('./controllers/blog')
+const blogsRouter = require('./controllers/blog')
 const usersRouter = require('./controllers/user')
 const loginRouter = require('./controllers/login')
 const middleware = require('./utils/middleware')
+const { userExtractor } = require('./utils/middleware')
 const logger = require('./utils/logger')
 const mongoose = require('mongoose')
 
@@ -35,7 +36,7 @@ app.use(
 
 app.use(middleware.getTokenFrom)
 
-app.use('/api/blogs', notesRouter)
+app.use('/api/blogs', userExtractor, blogsRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
 
