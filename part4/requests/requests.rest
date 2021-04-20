@@ -27,7 +27,8 @@ content-Type: application/json
 {
     "username": "bacardi",
     "name": "filipe",
-    "password": "p@ssw0rd"
+    "password": "p@ssw0rd",
+    "blog": []
 }
 
 ###
@@ -37,7 +38,34 @@ content-Type: application/json
 {
     "username": "pistaccio",
     "name": "hyunjin",
-    "password": "pVsswArd"
+    "password": "pVsswArd",
+    "blog": []
 }
 
 
+//Blog with UserID
+###
+POST http://localhost:3003/api/blogs HTTP/1.1
+content-Type: application/json
+
+{
+    "title": "Type wars",
+    "author": "Robert C. Martin",
+    "url": "http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html",
+    "likes": 15,
+    "user": "607eed3ac8929512f67f03a4"
+}
+
+###
+POST http://localhost:3003/api/blogs HTTP/1.1
+content-Type: application/json
+
+{
+  "title": "TDD harms architecture",
+  "author": "Robert C. Martin",
+  "url": "http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html",
+  "likes": 0,
+  "user": "607eed3ac8929512f67f03a4"
+}
+
+   

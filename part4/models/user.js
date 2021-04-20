@@ -11,10 +11,16 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    password: {
+    passwordHash: {
         type: String,
         required: true
-    }
+    },
+    blogs: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Blog'
+        }
+    ],
 })
 
 userSchema.plugin(uniqueValidation)
@@ -24,7 +30,7 @@ userSchema.set('toJSON', {
         returnObject.id = returnObject._id.toString()
         delete returnObject._id
         delete returnObject.__v
-        delete returnObject.password
+        delete returnObject.passwordHash
     },
 })
 
