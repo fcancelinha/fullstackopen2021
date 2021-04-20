@@ -16,12 +16,13 @@ const errorHandler = (error, request, response, next) => {
     logger.error(error.message)
 
     switch (error.name) {
+
     case 'CastError':
         return response.status(400).send({ error: 'invalid id format' })
     case 'ValidationError':
         return response.status(400).json({ error: error.message })
     case 'JsonWebTokenError':
-        return response.status(401).send({ error: 'User unauthorized' })
+        return response.status(401).send({ error: 'Token is missing or unauthorized' })
     default:
         next(error)
     }

@@ -6,6 +6,18 @@ const jwt = require('jsonwebtoken')
 const config = require('../utils/config')
 
 
+const decodeToken = (request, response) => {
+
+    const decodedToken = jwt.verify(request.token, config.SECRET)
+
+    if (!decodedToken.id) {
+        return response.status(401).json({ error: 'token missing or invalid' })
+    }
+
+    return decodedToken
+}
+
+
 blogRouter.get('/', async (request, response,) => {
 
     const blogs = await Blog.find({}).populate('user', { username: 1, name: 1 })
@@ -16,13 +28,9 @@ blogRouter.post('/', async (request, response) => {
 
     const body = request.body
 
-    const decodedToken = jwt.verify(request.token, config.SECRET)
+    const token = decodeToken(request, response)
 
-    if (!decodedToken.id) {
-        return response.status(401).json({ error: 'token missing or invalid' })
-    }
-
-    const user = await User.findById(decodedToken.id)
+    const user = await User.findById(token.id)
 
     const blog = new Blog({
         title: body.title,
@@ -41,6 +49,18 @@ blogRouter.post('/', async (request, response) => {
 
 blogRouter.delete('/:id', async (request, response) => {
 
+    const token = decodeToken(request, response)
+
+    const user = await User.findById(token.id)
+    const blog = await Blog.findById(request.params.id)
+
+    if(!user)
+        return response.status(401).send({ error: 'User is not recognized by the system' })
+
+    if(user.id.toString() !== blog.id.toString()) {
+        return response.status(401).send({ error: 'User is not the author and does not have deletion privileges for this blog' })
+    }
+        
     await Blog.findByIdAndRemove(request.params.id)
     response.status(204).end()
 })
