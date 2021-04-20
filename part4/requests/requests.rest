@@ -68,4 +68,12 @@ content-Type: application/json
   "user": "607eed3ac8929512f67f03a4"
 }
 
-   
+//User Login
+###
+POST http://localhost:3003/api/login HTTP/1.1
+content-Type: application/json
+
+{
+    "username": "bacardi",
+    "password": "p@ssw0rd"
+}
