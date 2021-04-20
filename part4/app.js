@@ -33,6 +33,8 @@ app.use(
     express.json(),
 )
 
+app.use(middleware.getTokenFrom)
+
 app.use('/api/blogs', notesRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)

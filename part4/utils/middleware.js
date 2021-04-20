@@ -20,13 +20,30 @@ const errorHandler = (error, request, response, next) => {
         return response.status(400).send({ error: 'invalid id format' })
     case 'ValidationError':
         return response.status(400).json({ error: error.message })
+    case 'JsonWebTokenError':
+        return response.status(401).send({ error: 'User unauthorized' })
     default:
         next(error)
     }
 }
 
+
+const getTokenFrom = (request, response, next) => {
+
+    const authorization = request.get('authorization')
+
+    if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+        request.token = authorization.substring(7)
+    }
+
+    next()
+}
+
+
+
 module.exports = {
     requestLogger,
     unknownEndpoint,
     errorHandler,
+    getTokenFrom
 }
