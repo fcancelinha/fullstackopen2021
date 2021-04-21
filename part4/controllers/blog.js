@@ -2,7 +2,7 @@
 const blogRouter = require('express').Router()
 const Blog = require('../models/blog')
 
-blogRouter.get('/', async (request, response,) => {
+blogRouter.get('/', async (request, response) => {
 
     const blogs = await Blog.find({}).populate('user', { username: 1, name: 1 })
     response.json(blogs)
@@ -24,7 +24,7 @@ blogRouter.post('/', async (request, response) => {
     user.blogs = user.blogs.concat(savedBlog.id)
     await user.save()
 
-    response.json(savedBlog)
+    response.status(201).json(savedBlog)
 })
 
 blogRouter.delete('/:id', async (request, response) => {
@@ -32,10 +32,7 @@ blogRouter.delete('/:id', async (request, response) => {
     const user = request.user
     const blog = await Blog.findById(request.params.id)
 
-    console.log(user)
-    console.log('blog', blog)
-
-    if(user._id.toString() !== blog.user._id.toString()) {
+    if(user._id.toString() !== blog.user.toString()) {
         return response.status(401).send({ error: 'User is not the author and does not have deletion privileges for this blog' })
     }
         

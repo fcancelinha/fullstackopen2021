@@ -36,8 +36,10 @@ const errorHandler = (error, request, response, next) => {
         return response.status(400).json({ error: error.message })
     case 'JsonWebTokenError':
         return response.status(401).send({ error: 'Token is missing or unauthorized' })
+    case 'TokenExpiredError':
+        return response.status(401).send({ error: 'Token is expired' })
     case 'InvalidUserError': 
-        return response.status(400).json({ error: error.message })
+        return response.status(401).json({ error: error.message })
     default:
         next(error)
     }
@@ -61,8 +63,7 @@ const userExtractor = async (request, response, next) =>  {
 
     const user = await User.findById(decodedToken.id)
 
-    if(!user)
-        throw new InvalidUserError('User was not found in the system')
+    if(!user) throw new InvalidUserError('User was not found in the system')
 
     request.user = user
 

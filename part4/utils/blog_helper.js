@@ -1,27 +1,21 @@
-const Blog = require('../models/blog')
-
 const initialBlogs = [
     {
-        title: 'React patterns',
-        author: 'Michael Chan',
-        url: 'https://reactpatterns.com/',
-        likes: 7,
+        title: 'Type wars',
+        author: 'Robert C. Martin',
+        url: 'http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html',
+        likes: 15,
+        user: '607f74a4d4b983ad2100ebde'
     },
     {
-        title: 'Go To Statement Considered Harmful',
-        author: 'Edsger W. Dijkstra',
-        url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
-        likes: 5,
+        title: 'TDD harms architecture',
+        author: 'Robert C. Martin',
+        url: 'http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html',
+        likes: 3,
+        user: '607f74a4d4b983ad2100ebde'
     }
 ]
-
-const allBlogs = async () => {
-    const response = Blog.find({})
-    return response.map(x => JSON.parse(JSON.stringify(x)))
-}
 
 
 module.exports =  {
     initialBlogs,
-    allBlogs
 }
