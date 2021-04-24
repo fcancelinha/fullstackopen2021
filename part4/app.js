@@ -33,9 +33,7 @@ app.use(
     express.json(),
 )
 
-app.use(middleware.getTokenFrom)
-
-app.use('/api/blogs', middleware.userExtractor, blogsRouter)
+app.use('/api/blogs', middleware.getTokenFrom, middleware.userExtractor, blogsRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
 
