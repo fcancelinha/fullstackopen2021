@@ -54,7 +54,7 @@ const App = () => {
       {errorMessage &&  <Notification text={errorMessage} />}
 
       {user === null 
-        ? <LoginForm credentials={credentials} userCreds={credentials} logHandler={loginHandler} credHandler={credentialHandler} /> 
+        ? <LoginForm userCreds={credentials} logHandler={loginHandler} credHandler={credentialHandler} /> 
         : <BlogList blogs={blogs} username={user.name} />}
 
     </div>
