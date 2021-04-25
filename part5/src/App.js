@@ -12,15 +12,26 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
 
+
   useEffect(() => {
 
-    if(user){
-      blogService.getAll().then(blogs =>
+    const loggedUserJSON = window.localStorage.getItem('user')
+
+    if(loggedUserJSON){
+
+      const user = JSON.parse(loggedUserJSON)
+      blogService.setToken(user.token)
+      setUser(user)
+
+      blogService
+      .getAll()
+      .then(blogs =>
         setBlogs(blogs)
       )
+
     }
-   
-  }, [user])
+
+  }, [])
 
 
   const loginHandler = async (event) => {
@@ -29,9 +40,12 @@ const App = () => {
     try {
 
       const user =  await loginService.login(credentials)
-      blogService.setToken(user.token)
       setUser(user)
+      blogService.setToken(user.token)
       setCredentials({ username: '', password: '' })
+
+      const blogs = await blogService.getAll()
+      setBlogs(blogs)
 
     } catch (error) {
       console.log(error)
@@ -47,15 +61,20 @@ const App = () => {
     setCredentials(credentials)
   }
 
+  const setUserNull = () => {
+    window.localStorage.clear()
+    setUser(null)
+  }
+
 
   return (
     <div>
 
       {errorMessage &&  <Notification text={errorMessage} />}
 
-      {user === null 
+      {user === null
         ? <LoginForm userCreds={credentials} logHandler={loginHandler} credHandler={credentialHandler} /> 
-        : <BlogList blogs={blogs} username={user.name} />}
+        : <BlogList blogs={blogs} username={user.name} userHandler={setUserNull} blogHandler={setBlogs}/>}
 
     </div>
   )
