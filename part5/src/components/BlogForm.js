@@ -5,8 +5,6 @@ const BlogForm = ({ currBlogs, notifiyHandler, blogHandler }) => {
     const [newBlog, setNewBlog] = useState({ title: '', author: '', url: '' })
 
 
-    
-
     const addBlog = async (event) => {
         event.preventDefault()
 

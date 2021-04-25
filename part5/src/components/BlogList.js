@@ -11,8 +11,29 @@ const BlogList = ({ blogs, username, userHandler, blogHandler, notifiyHandler })
         userHandler(null)
     }
 
+    const deleteBlog = async (blog) => {
 
-    const likeBlog = async(blog) => {
+
+
+        if (window.confirm(`Do you wish to remove ${blog.title} ?`)) {
+            try {
+                await blogService.deleteBlog(blog.id)
+                blogHandler(blogs.filter(({ id }) => id !== blog.id))
+                notifiyHandler({ content: 'Blog deleted with success', color: 'green' })
+            }
+            catch (exception) {
+                console.log(exception)
+                notifiyHandler({ content: 'Error deleting Blog', color: 'red' })
+            }
+
+        }
+
+
+
+    }
+
+
+    const likeBlog = async (blog) => {
 
         try {
 
@@ -28,7 +49,7 @@ const BlogList = ({ blogs, username, userHandler, blogHandler, notifiyHandler })
         }
         catch (exception) {
             console.log(exception)
-            notifiyHandler('Error updating blog')
+            notifiyHandler({ content: 'Error updating Blog', color: 'red' })
         }
     }
 
@@ -46,7 +67,7 @@ const BlogList = ({ blogs, username, userHandler, blogHandler, notifiyHandler })
                 </Toggleable>
 
                 {blogs.map(blog =>
-                    <Blog key={blog.id} blog={blog} notifiyHandler={notifiyHandler} likeBlog={likeBlog} />
+                    <Blog key={blog.id} blog={blog} notifiyHandler={notifiyHandler} handleLike={likeBlog} handleDelete={deleteBlog} />
                 )}
             </div>
         </div>
