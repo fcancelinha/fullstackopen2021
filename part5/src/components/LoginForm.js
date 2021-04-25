@@ -21,6 +21,7 @@ const LoginForm = ({ setNotification, setUser, setBlogs }) => {
           setCredentials({ username: '', password: '' })
     
           const blogs = await blogService.getAll()
+          blogs.sort((a,b) => b.likes - a.likes)
           setBlogs(blogs)
             
         } catch (error) {

@@ -22,9 +22,12 @@ const App = () => {
 
       blogService
       .getAll()
-      .then(blogs =>
+      .then(blogs => {
+
+        blogs.sort((a,b) => b.likes - a.likes)
         setBlogs(blogs)
-      )
+        
+      })
 
     }
 
