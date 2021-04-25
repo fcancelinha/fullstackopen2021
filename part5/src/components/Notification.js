@@ -1,9 +1,20 @@
 import React from 'react'
 
-const Notification = ({text}) => {
+const Notification = ({text, color}) => {
+
+    const notificationStyle =  {
+        color,
+        border: '20px solid',
+        fontSize: 'x-large',
+        borderWidth: 'thick',
+        backgroundColor: color === 'transparent' ? color : 'antiquewhite',
+        borderColor: color,
+        padding: '5px'
+    }
+
     return (
-        <div>
-            <h2> {text} </h2>
+        <div style={notificationStyle}>
+             {text}
         </div>
     )
 }

@@ -3,7 +3,7 @@ import blogService from '../services/blogService'
 import Blog from './Blog'
 
 
-const BlogList = ({ blogs, username, userHandler, blogHandler }) => {
+const BlogList = ({ blogs, username, userHandler, blogHandler, notifiyHandler }) => {
     const [newBlog, setNewBlog] = useState({ title: '', author: '', url: '' })
 
 
@@ -14,11 +14,13 @@ const BlogList = ({ blogs, username, userHandler, blogHandler }) => {
 
             const response = await blogService.createBlog(newBlog)
             console.log(response)
-
+            notifiyHandler({content: 'blog successfully added', color: 'green'})
             blogHandler(blogs.concat(response))
+
         }
         catch (error) {
             console.log(error)
+            notifiyHandler({content: 'Error adding blog', color: 'red'})
         }
 
 
@@ -57,8 +59,6 @@ const BlogList = ({ blogs, username, userHandler, blogHandler }) => {
                     <button type="submit" name="createBlogButton">create</button>
 
                 </form>
-
-
 
 
                 {blogs.map(blog =>

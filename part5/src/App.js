@@ -10,8 +10,7 @@ const App = () => {
   const [blogs, setBlogs] = useState([])
   const [credentials, setCredentials] = useState({ username: '', password: '' })
   const [user, setUser] = useState(null)
-  const [errorMessage, setErrorMessage] = useState(null)
-
+  const [notification, setNotification] = useState({content:"", color:"transparent"})
 
   useEffect(() => {
 
@@ -49,9 +48,9 @@ const App = () => {
 
     } catch (error) {
       console.log(error)
-      setErrorMessage('Username or password invalid')
+      setNotification({content:"'Username or password invalid'", color:"red"})
       setTimeout(() => {
-        setErrorMessage(null)
+        setNotification({content:"", color:"transparent"})
       }, 5000)
     }
 
@@ -66,15 +65,27 @@ const App = () => {
     setUser(null)
   }
 
+  const handleNotification = (content) => {
+    setNotification(content)
+
+    setTimeout(() => {
+      setNotification({content:"", color:"transparent"})
+    }, 5000)
+  }
+
 
   return (
     <div>
 
-      {errorMessage &&  <Notification text={errorMessage} />}
+      {notification.content && <Notification text={notification.content} color={notification.color} />}
 
       {user === null
         ? <LoginForm userCreds={credentials} logHandler={loginHandler} credHandler={credentialHandler} /> 
-        : <BlogList blogs={blogs} username={user.name} userHandler={setUserNull} blogHandler={setBlogs}/>}
+        : <BlogList blogs={blogs} 
+                    username={user.name} 
+                    userHandler={setUserNull} 
+                    blogHandler={setBlogs} 
+                    notifiyHandler={handleNotification}/>}
 
     </div>
   )
