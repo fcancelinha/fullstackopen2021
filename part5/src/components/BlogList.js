@@ -5,7 +5,7 @@ import BlogForm from './BlogForm'
 
 
 const BlogList = ({ blogs, username, userHandler, blogHandler, notifiyHandler }) => {
-    
+   
     const setUserNull = () => {
         window.localStorage.clear()
         userHandler(null)
@@ -14,12 +14,8 @@ const BlogList = ({ blogs, username, userHandler, blogHandler, notifiyHandler })
     return (
 
         <div>
-
-
             <h1>Blogs</h1>
-
             <div>
-
                 <h2>{username} is logged in <button type="button" onClick={setUserNull} >logout</button> </h2>
 
                 <Toggleable buttonLabel={'Create Blog'}>
@@ -27,15 +23,11 @@ const BlogList = ({ blogs, username, userHandler, blogHandler, notifiyHandler })
                     <BlogForm currBlogs={blogs} blogHandler={blogHandler} notifiyHandler={notifiyHandler} />
 
                 </Toggleable>
-               
 
                 {blogs.map(blog =>
-                    <Blog key={blog.id} blog={blog} />
+                    <Blog key={blog.id} blog={blog} /> 
                 )}
-
             </div>
-
-
         </div>
     )
 }
