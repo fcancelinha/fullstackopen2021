@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import blogService from './services/blogService'
-import loginService from './services/loginService'
 import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
 import BlogList from './components/BlogList'
@@ -8,7 +7,6 @@ import BlogList from './components/BlogList'
 const App = () => {
 
   const [blogs, setBlogs] = useState([])
-  const [credentials, setCredentials] = useState({ username: '', password: '' })
   const [user, setUser] = useState(null)
   const [notification, setNotification] = useState({content:"", color:"transparent"})
 
@@ -33,38 +31,6 @@ const App = () => {
   }, [])
 
 
-  const loginHandler = async (event) => {
-    event.preventDefault()
-
-    try {
-
-      const user =  await loginService.login(credentials)
-      setUser(user)
-      blogService.setToken(user.token)
-      setCredentials({ username: '', password: '' })
-
-      const blogs = await blogService.getAll()
-      setBlogs(blogs)
-
-    } catch (error) {
-      console.log(error)
-      setNotification({content:"'Username or password invalid'", color:"red"})
-      setTimeout(() => {
-        setNotification({content:"", color:"transparent"})
-      }, 5000)
-    }
-
-  }
-
-  const credentialHandler = (credentials) => {
-    setCredentials(credentials)
-  }
-
-  const setUserNull = () => {
-    window.localStorage.clear()
-    setUser(null)
-  }
-
   const handleNotification = (content) => {
     setNotification(content)
 
@@ -80,10 +46,10 @@ const App = () => {
       {notification.content && <Notification text={notification.content} color={notification.color} />}
 
       {user === null
-        ? <LoginForm userCreds={credentials} logHandler={loginHandler} credHandler={credentialHandler} /> 
+        ? <LoginForm setUser={setUser} setBlogs={setBlogs} setNotification={setNotification} /> 
         : <BlogList blogs={blogs} 
                     username={user.name} 
-                    userHandler={setUserNull} 
+                    userHandler={setUser} 
                     blogHandler={setBlogs} 
                     notifiyHandler={handleNotification}/>}
 
