@@ -43,7 +43,17 @@ blogRouter.delete('/:id', async (request, response) => {
 
 blogRouter.put('/:id', async (request, response) => {
 
-    const content = await Blog.findByIdAndUpdate(request.params.id, request.body, { new: true, runValidators: true })
+    const user = request.user
+    const blog = await Blog.findById(request.params.id)
+    const body = request.body
+
+    if(user._id.toString() !== blog.user.toString()) {
+        return response.status(401).send({ error: 'User is not the author and does not have update privileges for this blog' })
+    }
+    
+    body.user = body.user.id
+
+    const content = await Blog.findByIdAndUpdate(request.params.id, body, { new: true, runValidators: true })
     response.status(204).json(content)
 })
 

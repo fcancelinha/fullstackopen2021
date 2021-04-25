@@ -2,13 +2,34 @@ import React from 'react'
 import Blog from './Blog'
 import Toggleable from '../components/Toggleable'
 import BlogForm from './BlogForm'
-
+import blogService from '../services/blogService'
 
 const BlogList = ({ blogs, username, userHandler, blogHandler, notifiyHandler }) => {
-   
+
     const setUserNull = () => {
         window.localStorage.clear()
         userHandler(null)
+    }
+
+
+    const likeBlog = async(blog) => {
+
+        try {
+
+            const newBlog = {
+                ...blog,
+                likes: blog.likes + 1
+            }
+
+            await blogService.updateBlog(newBlog)
+
+            blogHandler(blogs.map((blog => blog.id === newBlog.id ? newBlog : blog)))
+            notifiyHandler({ content: 'Blog updated with success', color: 'green' })
+        }
+        catch (exception) {
+            console.log(exception)
+            notifiyHandler('Error updating blog')
+        }
     }
 
     return (
@@ -25,7 +46,7 @@ const BlogList = ({ blogs, username, userHandler, blogHandler, notifiyHandler })
                 </Toggleable>
 
                 {blogs.map(blog =>
-                    <Blog key={blog.id} blog={blog} /> 
+                    <Blog key={blog.id} blog={blog} notifiyHandler={notifiyHandler} likeBlog={likeBlog} />
                 )}
             </div>
         </div>
