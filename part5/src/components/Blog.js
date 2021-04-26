@@ -17,11 +17,11 @@ const Blog = ({ blog , handleLike, handleDelete }) => {
 
     return (
         <li style={blogStyle} className='blog'>
-            <div>{blog.title} - {blog.author} <button type="button" onClick={() => setVisible(!visible)} className='toggle-view'>  {visible ? 'hide' : 'view'} </button> </div>
+            <div>{blog.title} - {blog.author} <button type="button" onClick={() => setVisible(!visible)} className="toggle-view">  {visible ? 'hide' : 'view'} </button> </div>
 
             <div style={hideWhenVisible}>
                 <div className="blog-url"> {blog.url} </div>
-                <div className="blog-likes"> likes {blog.likes} <button type="button" onClick={() => handleLike(blog)}>like</button></div>
+                <div className="blog-likes"> likes {blog.likes} <button type="button" onClick={() => handleLike(blog)} className="like-blog">like</button></div>
                 <button type="button" onClick={() => handleDelete(blog)}>remove</button>
             </div>
 

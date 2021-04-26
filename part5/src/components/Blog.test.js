@@ -49,6 +49,22 @@ describe('That a blog component', () => {
 
     })
 
+    test('like button is clicked twice, the event handler the component received as props is called twice', () => {
+
+        const mockHandler = jest.fn()
+
+        const component = render(
+            <Blog blog={blog} handleLike={mockHandler}/>
+        )
+
+        component.debug()
+
+        const button = component.container.querySelector('.like-blog')
+        fireEvent.click(button)
+        fireEvent.click(button)
+
+        expect(mockHandler.mock.calls).toHaveLength(2)
+    })
 
 
 
