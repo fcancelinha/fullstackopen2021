@@ -17,7 +17,7 @@ const Blog = ({ blog , handleLike, handleDelete }) => {
 
     return (
         <li style={blogStyle} className='blog'>
-            <div>{blog.title} - {blog.author} <button type="button" onClick={() => setVisible(!visible)}>  {visible ? 'hide' : 'view'} </button> </div>
+            <div>{blog.title} - {blog.author} <button type="button" onClick={() => setVisible(!visible)} className='toggle-view'>  {visible ? 'hide' : 'view'} </button> </div>
 
             <div style={hideWhenVisible}>
                 <div className="blog-url"> {blog.url} </div>
