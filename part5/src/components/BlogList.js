@@ -13,8 +13,6 @@ const BlogList = ({ blogs, username, userHandler, blogHandler, notifiyHandler })
 
     const deleteBlog = async (blog) => {
 
-
-
         if (window.confirm(`Do you wish to remove ${blog.title} ?`)) {
             try {
                 await blogService.deleteBlog(blog.id)
@@ -25,11 +23,7 @@ const BlogList = ({ blogs, username, userHandler, blogHandler, notifiyHandler })
                 console.log(exception)
                 notifiyHandler({ content: 'Error deleting Blog', color: 'red' })
             }
-
         }
-
-
-
     }
 
 

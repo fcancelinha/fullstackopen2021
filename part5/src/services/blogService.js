@@ -6,12 +6,12 @@ let config = null
 
 const setToken = (userToken) => {
 
-  config = {headers: {Authorization: `bearer ${userToken}`}}
+  config = { headers: { Authorization: `bearer ${userToken}` } }
 }
 
 
 const getAll = async() => {
-  
+
   const request = await axios.get(baseUrl, config)
   return request.data
 }
@@ -24,9 +24,9 @@ const createBlog = async (blog) => {
 
 const updateBlog = async (blog) => {
 
-  const newBlog = {...blog}
+  const newBlog = { ...blog }
 
-  const response = await axios.put(`${baseUrl}/${blog.id}`, {...newBlog}, config)
+  const response = await axios.put(`${baseUrl}/${blog.id}`, { ...newBlog }, config)
   return response.data
 }
 
@@ -37,8 +37,8 @@ const deleteBlog = async (blogID) => {
 
 
 export default {
-  getAll, 
-  setToken , 
+  getAll,
+  setToken ,
   createBlog,
   updateBlog,
   deleteBlog

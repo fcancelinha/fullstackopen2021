@@ -8,7 +8,7 @@ const App = () => {
 
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
-  const [notification, setNotification] = useState({content:"", color:"transparent"})
+  const [notification, setNotification] = useState({ content:'', color:'transparent' })
 
   useEffect(() => {
 
@@ -21,13 +21,13 @@ const App = () => {
       setUser(user)
 
       blogService
-      .getAll()
-      .then(blogs => {
+        .getAll()
+        .then(blogs => {
 
-        blogs.sort((a,b) => b.likes - a.likes)
-        setBlogs(blogs)
-        
-      })
+          blogs.sort((a,b) => b.likes - a.likes)
+          setBlogs(blogs)
+
+        })
 
     }
 
@@ -38,7 +38,7 @@ const App = () => {
     setNotification(content)
 
     setTimeout(() => {
-      setNotification({content:"", color:"transparent"})
+      setNotification({ content:'', color:'transparent' })
     }, 5000)
   }
 
@@ -49,12 +49,12 @@ const App = () => {
       {notification.content && <Notification text={notification.content} color={notification.color} />}
 
       {user === null
-        ? <LoginForm setUser={setUser} setBlogs={setBlogs} setNotification={setNotification} /> 
-        : <BlogList blogs={blogs} 
-                    username={user.name} 
-                    userHandler={setUser} 
-                    blogHandler={setBlogs} 
-                    notifiyHandler={handleNotification}/>}
+        ? <LoginForm setUser={setUser} setBlogs={setBlogs} setNotification={setNotification} />
+        : <BlogList blogs={blogs}
+          username={user.name}
+          userHandler={setUser}
+          blogHandler={setBlogs}
+          notifiyHandler={handleNotification}/>}
 
     </div>
   )

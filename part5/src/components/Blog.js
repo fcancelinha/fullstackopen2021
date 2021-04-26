@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 
-
 const Blog = ({ blog , handleLike, handleDelete}) => {
   const [visible, setVisible] = useState(false)
 
