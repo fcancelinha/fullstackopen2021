@@ -6,58 +6,58 @@ import BlogList from './components/BlogList'
 
 const App = () => {
 
-  const [blogs, setBlogs] = useState([])
-  const [user, setUser] = useState(null)
-  const [notification, setNotification] = useState({ content:'', color:'transparent' })
+    const [blogs, setBlogs] = useState([])
+    const [user, setUser] = useState(null)
+    const [notification, setNotification] = useState({ content:'', color:'transparent' })
 
-  useEffect(() => {
+    useEffect(() => {
 
-    const loggedUserJSON = window.localStorage.getItem('user')
+        const loggedUserJSON = window.localStorage.getItem('user')
 
-    if(loggedUserJSON){
+        if(loggedUserJSON){
 
-      const user = JSON.parse(loggedUserJSON)
-      blogService.setToken(user.token)
-      setUser(user)
+            const user = JSON.parse(loggedUserJSON)
+            blogService.setToken(user.token)
+            setUser(user)
 
-      blogService
-        .getAll()
-        .then(blogs => {
+            blogService
+                .getAll()
+                .then(blogs => {
 
-          blogs.sort((a,b) => b.likes - a.likes)
-          setBlogs(blogs)
+                    blogs.sort((a,b) => b.likes - a.likes)
+                    setBlogs(blogs)
 
-        })
+                })
 
+        }
+
+    }, [])
+
+
+    const handleNotification = (content) => {
+        setNotification(content)
+
+        setTimeout(() => {
+            setNotification({ content:'', color:'transparent' })
+        }, 5000)
     }
 
-  }, [])
 
+    return (
+        <div>
 
-  const handleNotification = (content) => {
-    setNotification(content)
+            {notification.content && <Notification text={notification.content} color={notification.color} />}
 
-    setTimeout(() => {
-      setNotification({ content:'', color:'transparent' })
-    }, 5000)
-  }
+            {user === null
+                ? <LoginForm setUser={setUser} setBlogs={setBlogs} setNotification={setNotification} />
+                : <BlogList blogs={blogs}
+                    username={user.name}
+                    userHandler={setUser}
+                    blogHandler={setBlogs}
+                    notifiyHandler={handleNotification}/>}
 
-
-  return (
-    <div>
-
-      {notification.content && <Notification text={notification.content} color={notification.color} />}
-
-      {user === null
-        ? <LoginForm setUser={setUser} setBlogs={setBlogs} setNotification={setNotification} />
-        : <BlogList blogs={blogs}
-          username={user.name}
-          userHandler={setUser}
-          blogHandler={setBlogs}
-          notifiyHandler={handleNotification}/>}
-
-    </div>
-  )
+        </div>
+    )
 }
 
 export default App

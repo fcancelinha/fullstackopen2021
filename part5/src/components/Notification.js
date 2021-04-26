@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Notification = ({text, color}) => {
+const Notification = ({ text, color }) => {
 
     const notificationStyle =  {
         color,
@@ -14,7 +14,7 @@ const Notification = ({text, color}) => {
 
     return (
         <div style={notificationStyle}>
-             {text}
+            {text}
         </div>
     )
 }

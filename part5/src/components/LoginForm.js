@@ -12,29 +12,29 @@ const LoginForm = ({ setNotification, setUser, setBlogs }) => {
 
     const loginHandler = async (event) => {
         event.preventDefault()
-    
+
         try {
-    
-          const user =  await loginService.login(credentials)
-          setUser(user)
-          blogService.setToken(user.token)
-          setCredentials({ username: '', password: '' })
-    
-          const blogs = await blogService.getAll()
-          blogs.sort((a,b) => b.likes - a.likes)
-          setBlogs(blogs)
-            
+
+            const user =  await loginService.login(credentials)
+            setUser(user)
+            blogService.setToken(user.token)
+            setCredentials({ username: '', password: '' })
+
+            const blogs = await blogService.getAll()
+            blogs.sort((a,b) => b.likes - a.likes)
+            setBlogs(blogs)
+
         } catch (error) {
-          console.log(error)
-          setNotification({content:"'Username or password invalid'", color:"red"})
-          setTimeout(() => {
-            setNotification({content:"", color:"transparent"})
-          }, 5000)
+            console.log(error)
+            setNotification({ content:'\'Username or password invalid\'', color:'red' })
+            setTimeout(() => {
+                setNotification({ content:'', color:'transparent' })
+            }, 5000)
         } finally {
             setDismount(false)
         }
-    
-      }
+
+    }
 
 
     return (
@@ -45,13 +45,13 @@ const LoginForm = ({ setNotification, setUser, setBlogs }) => {
             <form onSubmit={loginHandler}>
 
                 <div>
-                <h4>Username</h4>
-                <input type="text" value={credentials.username} name="Username" onChange={({ target }) => setCredentials({ ...credentials, username: target.value })} />
+                    <h4>Username</h4>
+                    <input type="text" value={credentials.username} name="Username" onChange={({ target }) => setCredentials({ ...credentials, username: target.value })} />
                 </div>
 
                 <div>
-                <h4>Password</h4>
-                <input type="password" value={credentials.password} name="Password" onChange={({ target }) => setCredentials({ ...credentials, password: target.value })} />
+                    <h4>Password</h4>
+                    <input type="password" value={credentials.password} name="Password" onChange={({ target }) => setCredentials({ ...credentials, password: target.value })} />
                 </div>
 
                 <br></br>

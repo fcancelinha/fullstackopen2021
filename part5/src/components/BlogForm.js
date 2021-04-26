@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import blogService from '../services/blogService'
 
 const BlogForm = ({ currBlogs, notifiyHandler, blogHandler }) => {
@@ -12,13 +12,13 @@ const BlogForm = ({ currBlogs, notifiyHandler, blogHandler }) => {
 
             const response = await blogService.createBlog(newBlog)
             console.log(response)
-            notifiyHandler({content: 'blog successfully added', color: 'green'})
+            notifiyHandler({ content: 'blog successfully added', color: 'green' })
             blogHandler(currBlogs.concat(response))
 
         }
         catch (error) {
             console.log(error)
-            notifiyHandler({content: 'Error adding blog', color: 'red'})
+            notifiyHandler({ content: 'Error adding blog', color: 'red' })
         }
 
 
@@ -30,15 +30,15 @@ const BlogForm = ({ currBlogs, notifiyHandler, blogHandler }) => {
             <h2>create new Blog</h2>
 
             <div>
-                title:<input type="text" value={newBlog.title} name="title" onChange={({ target }) => setNewBlog({ ...newBlog, title: target.value })} />
+        title:<input type="text" value={newBlog.title} name="title" onChange={({ target }) => setNewBlog({ ...newBlog, title: target.value })} />
             </div>
 
             <div>
-                author:<input type="text" value={newBlog.author} name="author" onChange={({ target }) => setNewBlog({ ...newBlog, author: target.value })} />
+        author:<input type="text" value={newBlog.author} name="author" onChange={({ target }) => setNewBlog({ ...newBlog, author: target.value })} />
             </div>
 
             <div>
-                url:<input type="text" value={newBlog.url} name="url" onChange={({ target }) => setNewBlog({ ...newBlog, url: target.value })} />
+        url:<input type="text" value={newBlog.url} name="url" onChange={({ target }) => setNewBlog({ ...newBlog, url: target.value })} />
             </div>
 
             <br></br>
