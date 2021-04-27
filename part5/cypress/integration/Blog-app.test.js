@@ -66,7 +66,7 @@ describe('Blog app', function () {
             cy.contains('1')
         })
 
-        it('can like a blog', function (){
+        it('can delete a blog', function (){
             cy.contains('Create').click()
 			cy.get('.blog-title').type('something')
 			cy.get('.blog-author').type('something author')
@@ -79,6 +79,39 @@ describe('Blog app', function () {
             cy.contains('Blog deleted with success')
         })
 
+        it('the blogs are ordered by likes', function (){
+            cy.contains('Create').click()
+
+			cy.get('.blog-title').type('something')
+			cy.get('.blog-author').type('somethingauthor')
+			cy.get('.blog-url').type('somethingcom')
+			cy.get('#submit-blog').click()
+			
+            cy.contains('view').click()
+            cy.contains('like').click()
+
+
+            cy.get('.blog-title').clear().type('something2')
+			cy.get('.blog-author').clear().type('somethingauthor2')
+            cy.get(':nth-child(3) > [style=""] > .blog-likes > .like-blog').click()
+            cy.get(':nth-child(3) > [style=""] > .blog-likes > .like-blog').click()
+            cy.get(':nth-child(3) > [style=""] > .blog-likes > .like-blog').click()
+			cy.get('#submit-blog').click()
+            cy.get(':nth-child(3) > :nth-child(1) > .toggle-view').click()
+            cy.get(':nth-child(4) > :nth-child(1) > .toggle-view').click()
+
+
+
+            cy.get(':nth-child(3) > [style=""] > .blog-likes').should(($p) => {
+                expect($p).to.have.length(3)
+            })
+
+            cy.get(':nth-child(4) > [style=""] > .blog-likes').should(($p) => {
+                expect($p).to.have.length(1)
+            })
+
+
+        })
 
     })
 
