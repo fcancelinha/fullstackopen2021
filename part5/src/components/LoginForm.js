@@ -24,9 +24,11 @@ const LoginForm = ({ setNotification, setUser, setBlogs }) => {
             blogs.sort((a,b) => b.likes - a.likes)
             setBlogs(blogs)
 
+            setNotification({ content:`${user.username} is logged in`, color:'green' })
+
         } catch (error) {
             console.log(error)
-            setNotification({ content:'\'Username or password invalid\'', color:'red' })
+            setNotification({ content:'Username or password invalid', color:'red' })
             setTimeout(() => {
                 setNotification({ content:'', color:'transparent' })
             }, 5000)
@@ -46,16 +48,16 @@ const LoginForm = ({ setNotification, setUser, setBlogs }) => {
 
                 <div>
                     <h4>Username</h4>
-                    <input type="text" value={credentials.username} name="Username" onChange={({ target }) => setCredentials({ ...credentials, username: target.value })} />
+                    <input id="username" type="text" value={credentials.username} name="Username" onChange={({ target }) => setCredentials({ ...credentials, username: target.value })} />
                 </div>
 
                 <div>
                     <h4>Password</h4>
-                    <input type="password" value={credentials.password} name="Password" onChange={({ target }) => setCredentials({ ...credentials, password: target.value })} />
+                    <input id="password" type="password" value={credentials.password} name="Password" onChange={({ target }) => setCredentials({ ...credentials, password: target.value })} />
                 </div>
 
                 <br></br>
-                <button type="submit" className="login">Login</button>
+                <button type="submit" id="login-button">Login</button>
 
             </form>
         </div>
