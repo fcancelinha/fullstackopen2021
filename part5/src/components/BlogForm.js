@@ -1,49 +1,28 @@
-import React, { useState } from 'react'
-import blogService from '../services/blogService'
+import React from 'react'
 
-const BlogForm = ({ currBlogs, notifiyHandler, blogHandler }) => {
-    const [newBlog, setNewBlog] = useState({ title: '', author: '', url: '' })
+const BlogForm = ({ newBlog, blogHandler, setNewBlog }) => {
 
-
-    const addBlog = async (event) => {
-        event.preventDefault()
-
-        try {
-
-            const response = await blogService.createBlog(newBlog)
-            console.log(response)
-            notifiyHandler({ content: 'blog successfully added', color: 'green' })
-            blogHandler(currBlogs.concat(response))
-
-        }
-        catch (error) {
-            console.log(error)
-            notifiyHandler({ content: 'Error adding blog', color: 'red' })
-        }
-
-
-    }
 
     return (
-        <form onSubmit={addBlog}>
+        <form onSubmit={blogHandler} className="blog-form">
 
             <h2>create new Blog</h2>
 
             <div>
-        title:<input type="text" value={newBlog.title} name="title" onChange={({ target }) => setNewBlog({ ...newBlog, title: target.value })} />
+                title:<input className="blog-title" type="text" value={newBlog.title} name="title" onChange={({ target }) => setNewBlog({ ...newBlog, title: target.value })} />
             </div>
 
             <div>
-        author:<input type="text" value={newBlog.author} name="author" onChange={({ target }) => setNewBlog({ ...newBlog, author: target.value })} />
+                author:<input className="blog-author" type="text" value={newBlog.author} name="author" onChange={({ target }) => setNewBlog({ ...newBlog, author: target.value })} />
             </div>
 
             <div>
-        url:<input type="text" value={newBlog.url} name="url" onChange={({ target }) => setNewBlog({ ...newBlog, url: target.value })} />
+                url:<input className="blog-url" type="text" value={newBlog.url} name="url" onChange={({ target }) => setNewBlog({ ...newBlog, url: target.value })} />
             </div>
 
             <br></br>
 
-            <button type="submit" name="createBlogButton">Create</button>
+            <button type="submit" name="createBlogButton" id="submit-blog">Create</button>
 
         </form>
     )

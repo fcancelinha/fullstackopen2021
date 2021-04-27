@@ -6,6 +6,7 @@ import Blog from './Blog'
 
 
 
+
 describe('That a blog component', () => {
 
     const blog = {
@@ -23,8 +24,6 @@ describe('That a blog component', () => {
             <Blog blog={blog} />
         )
 
-        component.debug()
-
         expect(component.container).toHaveTextContent('React patterns')
         expect(component.container).toHaveTextContent('Michael Chan')
         expect(component.container.querySelector('.blog-url')).not.toBeVisible()
@@ -32,14 +31,12 @@ describe('That a blog component', () => {
 
     })
 
-    test('url and number of likes are shown when the button is clicked', () => {
+    test('properties url and number of likes are shown when the button is clicked', () => {
 
         //toggle-view
         const component = render(
             <Blog blog={blog} />
         )
-
-        component.debug()
 
         const button = component.container.querySelector('.toggle-view')
         fireEvent.click(button)
@@ -49,7 +46,7 @@ describe('That a blog component', () => {
 
     })
 
-    test('like button is clicked twice, the event handler the component received as props is called twice', () => {
+    test('like button when clicked twice, the event handler that the component receives as props is called twice', () => {
 
         const mockHandler = jest.fn()
 
@@ -57,17 +54,11 @@ describe('That a blog component', () => {
             <Blog blog={blog} handleLike={mockHandler}/>
         )
 
-        component.debug()
-
         const button = component.container.querySelector('.like-blog')
         fireEvent.click(button)
         fireEvent.click(button)
 
         expect(mockHandler.mock.calls).toHaveLength(2)
     })
-
-
-
-
 
 })

@@ -5,7 +5,7 @@ const Toggleable = React.forwardRef((props, ref) => {
     const [visibility, setVisibility] = useState(false)
 
 
-    Toggleable.PropTypes = {
+    Toggleable.propTypes = {
         buttonLabel: PropTypes.string.isRequired
     }
 

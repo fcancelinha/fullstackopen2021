@@ -9,7 +9,8 @@ const Blog = ({ blog , handleLike, handleDelete }) => {
         border: 'solid',
         borderWidth: 2,
         width: '20%',
-        marginBottom: '5px'
+        marginBottom: '5px',
+        listStyle: 'none'
     }
 
     const hideWhenVisible = { display: visible ? '' : 'none' }

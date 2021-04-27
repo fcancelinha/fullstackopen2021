@@ -1,10 +1,32 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Blog from './Blog'
 import Toggleable from '../components/Toggleable'
 import BlogForm from './BlogForm'
 import blogService from '../services/blogService'
 
 const BlogList = ({ blogs, username, userHandler, blogHandler, notifiyHandler }) => {
+    const [newBlog, setNewBlog] = useState({ title: '', author: '', url: '' })
+
+
+    const addBlog = async (event) => {
+        event.preventDefault()
+
+        try {
+
+            const response = await blogService.createBlog(newBlog)
+            console.log(response)
+            notifiyHandler({ content: 'blog successfully added', color: 'green' })
+            blogHandler(blogs.concat(response))
+
+        }
+        catch (error) {
+            console.log(error)
+            notifiyHandler({ content: 'Error adding blog', color: 'red' })
+        }
+
+
+    }
+
 
     const setUserNull = () => {
         window.localStorage.clear()
@@ -56,7 +78,7 @@ const BlogList = ({ blogs, username, userHandler, blogHandler, notifiyHandler })
 
                 <Toggleable buttonLabel={'Create Blog'}>
 
-                    <BlogForm currBlogs={blogs} blogHandler={blogHandler} notifiyHandler={notifiyHandler} />
+                    <BlogForm newBlog={newBlog} blogHandler={addBlog} setNewBlog={setNewBlog} />
 
                 </Toggleable>
 
