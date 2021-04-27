@@ -66,6 +66,19 @@ describe('Blog app', function () {
             cy.contains('1')
         })
 
+        it('can like a blog', function (){
+            cy.contains('Create').click()
+			cy.get('.blog-title').type('something')
+			cy.get('.blog-author').type('something author')
+			cy.get('.blog-url').type('something.com')
+			cy.get('#submit-blog').click()
+			
+
+            cy.contains('view').click()
+            cy.contains('remove').click()
+            cy.contains('Blog deleted with success')
+        })
+
 
     })
 
