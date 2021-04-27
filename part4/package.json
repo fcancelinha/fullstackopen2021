@@ -10,7 +10,8 @@
     "test": "NODE_ENV=test jest --verbose --runInBand",
     "deploy": "git push heroku master",
     "logs:prod": "heroku logs --tail",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "start:test": "NODE_ENV=test node index.js"
   },
   "repository": {
     "type": "git",
@@ -36,6 +37,8 @@
   },
   "devDependencies": {
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "cypress": "^7.2.0",
     "dotenv": "^8.2.0",
     "eslint": "^7.24.0",
     "eslint-plugin-jest": "^24.3.5",

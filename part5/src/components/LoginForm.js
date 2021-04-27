@@ -39,7 +39,7 @@ const LoginForm = ({ setNotification, setUser, setBlogs }) => {
 
     return (
 
-        <div>
+        <div className="login-form">
             <h3>Login</h3>
 
             <form onSubmit={loginHandler}>
@@ -55,7 +55,7 @@ const LoginForm = ({ setNotification, setUser, setBlogs }) => {
                 </div>
 
                 <br></br>
-                <button type="submit">Submit</button>
+                <button type="submit" className="login">Login</button>
 
             </form>
         </div>
