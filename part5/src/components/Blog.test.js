@@ -5,8 +5,6 @@ import Blog from './Blog'
 
 
 
-
-
 describe('That a blog component', () => {
 
     const blog = {
