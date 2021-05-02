@@ -1,4 +1,7 @@
+import anecdoteService from '../services/anecdoteService'
+
 export const voteOnAnecdote = (id) => {
+
   return {
     type: 'VOTE',
     data: {
@@ -8,18 +11,24 @@ export const voteOnAnecdote = (id) => {
 }
 
 export const createNewAnedocte = (anecdote) => {
-  return {
-    type: 'CREATE',
-    data: {
-      ...anecdote
-    }
+
+  return async dispatch => {
+    const newAnecdote = await anecdoteService.createNew({content: anecdote, votes: 0})
+    dispatch({
+      type: 'CREATE',
+      data: newAnecdote,
+    })
   }
 }
 
-export const initializeAnecdotes = (anecdotes) => {
-  return {
-    type: 'INIT',
-    data: anecdotes,
+export const initializeAnecdotes = () => {
+
+  return async dispatch =>  {
+    const anecdotes = await anecdoteService.getAll()
+    dispatch({
+      type: 'INIT',
+      data: anecdotes
+    })
   }
 }
 
@@ -27,9 +36,8 @@ export const initializeAnecdotes = (anecdotes) => {
 const reducer = (state = [], action) => {
   console.log('state now: ', state)
   console.log('action', action)
-  const type = action.type
 
-  switch(type){
+  switch(action.type){
     case 'VOTE': {
        const id = action.data.id
        const anecdoteToUpdate = state.find(a => a.id === id)
