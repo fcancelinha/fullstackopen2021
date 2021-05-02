@@ -23,7 +23,6 @@ const AnecdoteList = () => {
 
     }
 
-
     return (
         <div>
             {anecdotes
