@@ -5,7 +5,9 @@ import { displayNotification, hideNotification } from '../reducers/notificationR
 
 const AnecdoteList = () => {
 
-    const anecdotes = useSelector(state => state.anecdotes)
+    const filters = useSelector(state => state.filters)
+    const anecdotes = useSelector(state => state.anecdotes.filter(x => x.content.includes(filters.content)).sort((a, b) => b.votes - a.votes))
+
     const dispatch = useDispatch()
 
     const vote = (id) => {
@@ -18,14 +20,13 @@ const AnecdoteList = () => {
         setTimeout(() => {
             dispatch(hideNotification())
         }, 2000)
-      
+
     }
 
 
     return (
         <div>
             {anecdotes
-                .sort((a, b) => b.votes - a.votes)
                 .map(anecdote =>
                     <div key={anecdote.id}>
                         <div>
