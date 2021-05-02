@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import axios from 'axios'
 
 const baseUrl = 'http://localhost:3001/anecdotes'
@@ -12,7 +13,13 @@ const createNew = async (content) => {
   return response.data
 }
 
+const updateAnecdote = async(id, content) => {
+  const response = await axios.put(`${baseUrl}/${id}`, content)
+  return response.data
+}
+
 export default { 
   getAll,
-  createNew
+  createNew,
+  updateAnecdote
 }
