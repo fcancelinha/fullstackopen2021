@@ -1,27 +1,30 @@
-export const displayNotification = (content) => {
-    return {
-        type: 'DISPLAY',
-        data: {
-            content,
-            style: {
-                border: 'solid',
-                padding: 10,
-                borderWidth: 1,
-            }
-        }
-    }
-}
+export const displayNotification = (content, timeout) => {
 
-export const hideNotification = () => {
-    return {
-        type: 'HIDE',
-        data: {
-            content: '',
-            style: {
-                display: 'none'
-            },
-        }
-    }
+    return async dispatch => {
+        dispatch({
+            type: 'DISPLAY',
+            data: {
+                content,
+                style: {
+                    border: 'solid',
+                    padding: 10,
+                    borderWidth: 1,
+                }
+            }
+        })
+
+         setTimeout(() => {
+            dispatch({
+                type: 'HIDE',
+                data: {
+                    content: '',
+                    style: {
+                        display: 'none'
+                    },
+                }
+            }) 
+        }, timeout);
+      }
 }
 
 const initialState = {
@@ -35,8 +38,7 @@ const initialState = {
 
 
 const reducer = (state = initialState, action) => {
-        console.log('state now: ', state)
-        console.log('action', action)
+
         const type = action.type
 
         switch (type) {
