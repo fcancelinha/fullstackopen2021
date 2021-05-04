@@ -1,4 +1,4 @@
-# Full Stack Open  2021
+# Full Stack 2021
 University of Helsinki - Full Stack 2021 course exercise submissions
 
 # Certificate of Completion
