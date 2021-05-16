@@ -1,6 +1,5 @@
 import axios from 'axios'
-const baseUrl = '/api/blogs'
-
+const baseUrl = 'http://localhost:3003/api/blogs'
 
 let config = null
 
@@ -8,7 +7,6 @@ const setToken = (userToken) => {
 
     config = { headers: { Authorization: `bearer ${userToken}` } }
 }
-
 
 const getAll = async() => {
 

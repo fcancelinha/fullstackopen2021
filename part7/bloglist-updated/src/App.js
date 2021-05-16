@@ -1,62 +1,45 @@
-import React, { useState, useEffect } from 'react'
-import blogService from './services/blogService'
+//libraries
+import React, { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+//reducers
+import { initializeBlogs } from './reducers/blogReducer'
+import { setUser } from './reducers/userReducer'
+//components
 import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
-import BlogList from './components/BlogList'
+import Menu from './components/Menu'
+import { Container } from 'react-bootstrap'
 
 const App = () => {
 
-    const [blogs, setBlogs] = useState([])
-    const [user, setUser] = useState(null)
-    const [notification, setNotification] = useState({ content:'', color:'transparent' })
+    const dispatch = useDispatch()
+    const user = useSelector(state => state.user)
 
     useEffect(() => {
 
         const loggedUserJSON = window.localStorage.getItem('user')
-
+      
         if(loggedUserJSON){
-
-            const user = JSON.parse(loggedUserJSON)
-            blogService.setToken(user.token)
-            setUser(user)
-
-            blogService
-                .getAll()
-                .then(blogs => {
-
-                    blogs.sort((a,b) => b.likes - a.likes)
-                    setBlogs(blogs)
-
-                })
-
+            const userFromStorage = JSON.parse(loggedUserJSON)
+            dispatch(setUser(userFromStorage))
         }
+                
+    }, [dispatch])
 
-    }, [])
 
-
-    const handleNotification = (content) => {
-        setNotification(content)
-
-        setTimeout(() => {
-            setNotification({ content:'', color:'transparent' })
-        }, 5000)
-    }
+    useEffect(() => {
+        if(user.loggedUser)
+            dispatch(initializeBlogs())
+    }, [dispatch, user.loggedUser])
 
 
     return (
-        <div>
-
-            {notification.content && <Notification text={notification.content} color={notification.color} />}
-
-            {user === null
-                ? <LoginForm setUser={setUser} setBlogs={setBlogs} setNotification={setNotification} />
-                : <BlogList blogs={blogs}
-                    username={user.name}
-                    userHandler={setUser}
-                    blogHandler={setBlogs}
-                    notifiyHandler={handleNotification}/>}
-
-        </div>
+        <Container> 
+           <Notification />
+            {user.loggedUser === null
+                  ? <LoginForm />
+                  : <Menu />}
+        </Container>
     )
 }
 

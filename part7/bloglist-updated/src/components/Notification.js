@@ -1,20 +1,14 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 
-const Notification = ({ text, color }) => {
 
-    const notificationStyle =  {
-        color,
-        border: '20px solid',
-        fontSize: 'x-large',
-        borderWidth: 'thick',
-        backgroundColor: color === 'transparent' ? color : 'antiquewhite',
-        borderColor: color,
-        padding: '5px'
-    }
+const Notification = () => {
+
+    const notification = useSelector(state => state.notification.data)
 
     return (
-        <div style={notificationStyle}>
-            {text}
+        <div style={notification.style}>
+            {notification.content}
         </div>
     )
 }

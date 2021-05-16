@@ -1,66 +1,47 @@
-import React, { useState, useEffect } from 'react'
-import loginService from '../services/loginService'
-import blogService from '../services/blogService'
+import React from 'react'
+import { useDispatch} from 'react-redux'
+import { loginUser } from '../reducers/userReducer'
+import useField from '../hooks/useField'
+import { Form, Button } from 'react-bootstrap'
 
-const LoginForm = ({ setNotification, setUser, setBlogs }) => {
-    const [credentials, setCredentials] = useState({ username: '', password: '' })
-    const [dismount, setDismount] = useState(true)
+const LoginForm = () => {
 
-    useEffect(() => {
-        return dismount
-    }, [dismount])
+    const dispatch = useDispatch()
+    const username = useField('text')
+    const password = useField('password')
 
-    const loginHandler = async (event) => {
+    const loginHandler = (event) => {
         event.preventDefault()
 
-        try {
-
-            const user =  await loginService.login(credentials)
-            setUser(user)
-            blogService.setToken(user.token)
-            setCredentials({ username: '', password: '' })
-
-            const blogs = await blogService.getAll()
-            blogs.sort((a,b) => b.likes - a.likes)
-            setBlogs(blogs)
-
-            setNotification({ content:`${user.username} is logged in`, color:'green' })
-
-        } catch (error) {
-            console.log(error)
-            setNotification({ content:'Username or password invalid', color:'red' })
-            setTimeout(() => {
-                setNotification({ content:'', color:'transparent' })
-            }, 5000)
-        } finally {
-            setDismount(false)
-        }
-
+        dispatch(loginUser({ username: username.value, password: password.value }))
     }
+
 
 
     return (
 
-        <div className="login-form">
+        <Form onSubmit={loginHandler}>
+
             <h3>Login</h3>
 
-            <form onSubmit={loginHandler}>
+            <Form.Group controlId="formBasicEmail">
+                <Form.Label>Username</Form.Label>
+                <Form.Control {...username} placeholder="Enter email" />
+                <Form.Text className="text-muted">
+                    We'll never share your email with anyone else.
+                </Form.Text>
+            </Form.Group>
 
-                <div>
-                    <h4>Username</h4>
-                    <input id="username" type="text" value={credentials.username} name="Username" onChange={({ target }) => setCredentials({ ...credentials, username: target.value })} />
-                </div>
+            <Form.Group controlId="formBasicPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control {...password} placeholder="Password" />
+            </Form.Group>
 
-                <div>
-                    <h4>Password</h4>
-                    <input id="password" type="password" value={credentials.password} name="Password" onChange={({ target }) => setCredentials({ ...credentials, password: target.value })} />
-                </div>
+            <Button variant="primary" type="submit">
+                Login
+            </Button>
 
-                <br></br>
-                <button type="submit" id="login-button">Login</button>
-
-            </form>
-        </div>
+        </Form>
     )
 }
 
