@@ -13,7 +13,7 @@ const calculateBmiMod = (height: number, weight: number ): string => {
         default:
             return "Overweight (reduce weight)";
     }
-}
+};
 
 
-export default calculateBmiMod
+export default calculateBmiMod;

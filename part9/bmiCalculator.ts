@@ -3,7 +3,7 @@ const calculateBmi = (height: number, weight: number ): string => {
 
     const result = (weight / (height * height));
 
-    console.log(result)
+    console.log(result);
 
     switch(true) {
         case result < 25 :
@@ -13,9 +13,9 @@ const calculateBmi = (height: number, weight: number ): string => {
         default:
             return "Overweight (reduce weight)";
     }
-}
+};
 
-const weight: number = Number(process.argv[2])
-const height: number = Number(process.argv[3])
+const weight = Number(process.argv[2]);
+const height = Number(process.argv[3]);
 
-console.log(calculateBmi(weight, height))
+console.log(calculateBmi(weight, height));

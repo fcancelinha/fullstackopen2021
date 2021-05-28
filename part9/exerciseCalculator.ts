@@ -9,15 +9,11 @@ interface Result {
 }
 
 
-const exerciseCalculator = (week: Array<number>, target: number): Result => {
+export const exerciseCalculator = (week: Array<number>, target: number): Result => {
 
     const nrDays = week.length;
     const average = week.reduce((acc, cur) => acc + cur, 0) / nrDays;
 
-    const rates = {
-        rating: String,
-        ratingDescription: String
-    }
 
     const result: Result = {
         periodLength: nrDays,
@@ -27,15 +23,15 @@ const exerciseCalculator = (week: Array<number>, target: number): Result => {
         ratingDescription : 'not too bad but could be better',
         target,
         average,
-    }
+    };
 
     return result;
-}
+};
 
-process.argv.splice(0,2)
-const targetParam: number = Number(process.argv[0])
-const weekParam: Array<number> = process.argv.splice(1).map(Number);
+// process.argv.splice(0,2);
+// const targetParam = Number(process.argv[0]);
+// const weekParam: Array<number> = process.argv.splice(1).map(Number);
 
-console.log(targetParam, weekParam)
-console.log(exerciseCalculator(weekParam, targetParam));
+// console.log(targetParam, weekParam);
+// console.log(exerciseCalculator(weekParam, targetParam));
 
