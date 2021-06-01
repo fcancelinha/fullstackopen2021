@@ -8,7 +8,6 @@ const getDiagnoses = (): Array<Diagnostic> => {
 };
 
 
-
 export default {
     getDiagnoses
 };
